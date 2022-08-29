@@ -64,7 +64,7 @@ $ kubectl apply -f clusterautoscaler.yml
 kubeadm token create --print-join-command
 # copy the command and run on the nodes
 kubectl get nodes 
-kubectl apply -f deployme.yml
+kubectl apply -f deployme.yaml
 
 ```
 
