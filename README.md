@@ -1,9 +1,3 @@
-#  **<span style="color:green">ACADA learning, Calgary, Canada.</span>**
-### **<span style="color:green">Contacts: +1437 215 2483<br> WebSite : <http://acadalearning.com/></span>**
-### **Email: acadalearning@gmail.com**
-# Acada Learning,  -    Acada Learning 
-# Tel: +1 587 574 2233,   
-#    www.acadalearning.com 
 # Terraform Installation And Setup In AWS EC2 Linux Instances
 #  Using Terraform to provision a fully managed Amazon EKS Cluster
 
@@ -28,31 +22,7 @@ $ git clone https://github.com/devopscalgary/eks-terraform-setup.git
 $ cd eks-terraform-setup
 # install terraform using a bash shell script
 $ sh terraform-install.sh
-# OR install terraform by running the commands below
-$ wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip
-$ sudo unzip terraform_0.12.26_linux_amd64.zip -d /usr/local/bin/
-# Export terraform binary path temporally
-$ export PATH=$PATH:/usr/local/bin
-# Add path permanently for current user.By Exporting path in .bashrc file at end of file.
-$ vi .bashrc
-   export PATH="$PATH:/usr/local/bin"
-# Source .bashrc to reflect for current session
-$ source ~/.bashrc  
-# run the scripts https://github.com/devopscalgary/eks-terraform-setup/blob/main/terraform-install.sh
 
-
-$ sudo yum install wget unzip -y
-$ wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip
-$ sudo unzip terraform_0.12.26_linux_amd64.zip -d /usr/local/bin/
-# Export terraform binary path temporally
-$ export PATH=$PATH:/usr/local/bin
-# Add path permanently for current user.By Exporting path in .bashrc file at end of file.
-$ vi .bashrc
-   export PATH="$PATH:/usr/local/bin"
-# Source .bashrc to reflect for current session
-$ source ~/.bashrc  
-# run the scripts https://github.com/devopscalgary/eks-terraform-setup/blob/main/terraform-install.sh
-```
 #### Clone terraform scripts
 ``` sh
 $ git clone https://github.com/devopscalgary/eks-terraform-setup
@@ -81,6 +51,8 @@ $ mkdir .kube/
 $ vi .kube/config
 $ kubectl get pod
 $ #!/bin/bash 
+$ vi iam-authenticator.sh
+# be sure the region is set in your region
 $ sh iam-authenticator.sh 
 $ kubectl get pod
 ## deploy cluster auto scaler
@@ -88,11 +60,13 @@ $ kubectl apply -f clusterautoscaler.yml
 
  ```
 ```
-##  Destroy Infrastructure  
-```sh
-$ terraform destroy --auto-approve 
-```
+# on your K8s master, join the created worker nodes
+kubeadm token create --print-join-command
+# copy the command and run on the nodes
+kubectl get nodes 
+kubectl apply -f deployme.yml
 
+```
 
 # EKS Getting Started Guide Configuration
 
