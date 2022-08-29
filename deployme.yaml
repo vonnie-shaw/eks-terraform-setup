@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cbapp
+spec:
+  selector:
+    matchLabels:
+      app: cbapp
+  replicas: 3
+  template:
+    metadata:
+      name: cbapp
+      labels:
+        app: cbapp
+    spec:
+      containers:
+      - name: cbapp
+        image: vonnieshaw/cbapp
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cbapp
+spec:
+  selector:
+    app: cbapp
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: LoadBalancer    
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: cron-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: my-deployment
+  triggers:
+  - type: cron
+    metadata:
+      timezone: us-west-2
+      start: 30 * * * *
+      end: 45 * * * *
+      desiredReplicas: "2"
