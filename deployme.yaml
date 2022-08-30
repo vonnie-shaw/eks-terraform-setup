@@ -39,11 +39,11 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    name: my-deployment
+    name: cbapp
   triggers:
   - type: cron
     metadata:
-      timezone: us-west-2
-      start: 30 * * * *
-      end: 45 * * * *
-      desiredReplicas: "2"
+      timezone: Alberta/Canada
+      start: 0 18 * * *
+      end: 0 1 * * *
+      desiredReplicas: "3"
